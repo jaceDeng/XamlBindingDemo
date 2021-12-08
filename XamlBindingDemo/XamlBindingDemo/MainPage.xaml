@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             x:Name="mainPage"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:xamlbindingdemo="clr-namespace:XamlBindingDemo"
+             x:Class="XamlBindingDemo.MainPage">
+    <ContentPage.BindingContext>
+        <xamlbindingdemo:Demo/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="绑定演示" HorizontalOptions="Center"/>
+            <!--简单信息绑定测试-->
+            <Label Text="{Binding Text }"/>
+            <!--简单双向信息绑定测试-->
+            <Entry Text="{Binding Text,Mode=TwoWay}"/>
+            <!--简单嵌套对象信息绑定测试-->
+            <Label Text="{Binding  Name }" BindingContext="{Binding CurrentUser}"/>
+            <Label TextColor="Blue" Text="{Binding  CurrentUser.Name ,StringFormat='我是第二排的{0}'}"  />
+
+            <CollectionView ItemsSource="{Binding AllUser}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate> 
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}"/>
+                            <Label Text="{Binding Age}"/>
+                            <!---绑定基础对象的属性-->
+                            <Button Text="点击" HorizontalOptions="EndAndExpand" WidthRequest="50" TextColor="Black" Background="Red" 
+                                        Command="{Binding BindingContext.ReturnCommand , Source={x:Reference mainPage} }" />
+                        </StackLayout>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="新增" BackgroundColor="Green" Command="{Binding AddCommand}"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
