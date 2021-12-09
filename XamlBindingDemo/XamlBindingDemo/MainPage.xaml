@@ -17,9 +17,19 @@
             <Label Text="{Binding  Name }" BindingContext="{Binding CurrentUser}"/>
             <Label TextColor="Blue" Text="{Binding  CurrentUser.Name ,StringFormat='我是第二排的{0}'}"  />
 
+            <Label Text="正在加载中...">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsBusy}" Value="False">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsBusy}" Value="True">
+                        <Setter Property="IsVisible" Value="True" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <CollectionView ItemsSource="{Binding AllUser}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate> 
+                    <DataTemplate>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{Binding Name}"/>
                             <Label Text="{Binding Age}"/>
